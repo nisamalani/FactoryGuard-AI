@@ -43,3 +43,14 @@ def save_model(model, path="model.pkl"):
 
 def load_model(path="model.pkl"):
     return joblib.load(path)
+
+
+def train_random_forest(X_train, y_train):
+    from sklearn.ensemble import RandomForestClassifier
+    from imblearn.over_sampling import SMOTE
+    smote = SMOTE(random_state=42)
+    X_res, y_res = smote.fit_resample(X_train, y_train)
+    rf = RandomForestClassifier(n_estimators=100, class_weight="balanced", random_state=42)
+    rf.fit(X_res, y_res)
+    print("Random Forest trained!")
+    return rf
