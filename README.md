@@ -1,6 +1,6 @@
 # FactoryGuard AI — IoT Predictive Maintenance Engine
 
-> **Infotact Solutions | Data Intelligence Unit | Cohort Zeta | Q4 2025**
+> **Infotact Solutions | Data Intelligence Unit | Cohort Zeta | Q4 2026**
 
 ## Problem Statement
 A large-scale manufacturing facility operates 500 critical robotic arms.  
