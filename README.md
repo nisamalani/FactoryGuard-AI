@@ -1,89 +1,115 @@
-# FactoryGuard AI — IoT Predictive Maintenance Engine
+# 🚀 FactoryGuard AI
 
+<<<<<<< HEAD
 > **Infotact Solutions | Data Intelligence Unit | Cohort Zeta | Q4 2026**
 
 ## Problem Statement
 A large-scale manufacturing facility operates 500 critical robotic arms.  
 Unplanned equipment failure costs **$10,000/hour** in downtime.  
 FactoryGuard AI predicts failure **24 hours in advance** from streaming IoT sensor data.
+=======
+Production-ready Predictive Maintenance System that predicts machine failure using sensor data and explains predictions using SHAP.
+>>>>>>> 00b67ff (Final project update)
 
 ---
 
-## Project Architecture
----
+## 📌 Features
 
-## Tech Stack
-
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| Data Engineering | Pandas, NumPy | Ingestion, cleaning, feature creation |
-| Baseline Model | Scikit-Learn Logistic Regression | Comparison baseline |
-| Advanced Model | XGBoost + RandomizedSearchCV | Production model |
-| Ensemble Model | Random Forest | Week 2 comparison |
-| Imbalance Handling | SMOTE (imbalanced-learn) | Rare failure oversampling |
-| Explainability | SHAP | XAI local + global explanations |
-| Deployment | Flask REST API | Model-as-a-Service endpoint |
-| Serialization | joblib | Model persistence |
-| IDE | VS Code | Production-grade modular code |
+- Predict machine failure (binary classification)
+- Handle imbalanced data using SMOTE
+- Explain predictions using SHAP
+- Flask API for real-time prediction
+- Feature engineering (rolling + lag features)
 
 ---
 
-## Setup
-```bash
-git clone https://github.com/nisamalani/FactoryGuard-AI.git
-cd FactoryGuard-AI
+## 🧠 Tech Stack
+
+- Python
+- Pandas, NumPy
+- Scikit-learn
+- XGBoost
+- Imbalanced-learn
+- SHAP
+- Flask
+
+---
+
+## 📂 Project Structure
+
+FactoryGuard_AI/
+│
+├── data/
+│   └── sensor_data.csv
+│
+├── src/
+│   ├── data_preprocessing.py
+│   ├── feature_engineering.py
+│   ├── train.py
+│   ├── explain.py
+│
+├── models/
+│   └── model.pkl
+│
+├── app.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+
+---
+
+## ▶️ How to Run
+
+Install dependencies:
+
 pip install -r requirements.txt
-brew install libomp  # macOS only
-```
 
-## Run Training
-```bash
-python3 run_training.py
-```
+Train model:
 
-## Start API
-```bash
-python3 app.py
-```
+python src/train.py
 
-## Test API
-```bash
-curl -X POST http://127.0.0.1:5000/predict -H "Content-Type: application/json" -d '{"features": [0.5,75.2,1.1,0.48,74.8,1.09,0.51,75.1,1.12,0.49,74.9,1.1,0.5,75.0,1.11,0.47,74.7,1.08,0.5,75.0,1.1]}'
-```
+Run API:
+
+python app.py
 
 ---
 
-## Results
+## 🌐 API
 
-| Model | F1-Score | Recall |
-|-------|----------|--------|
-| Logistic Regression (baseline) | 1.00 | 1.00 |
-| Random Forest | 1.00 | 1.00 |
-| **XGBoost (deployed)** | **1.00** | **1.00** |
+POST /predict
 
-> F1=1.0 on clean synthetic data. Real industrial data typically yields F1 of 0.85-0.92.
+### Input
+
+{
+  "temperature": 85,
+  "vibration": 0.8,
+  "pressure": 30,
+  "temp_roll_mean": 82,
+  "vibration_roll_mean": 0.75,
+  "temp_lag1": 84,
+  "vibration_lag1": 0.7
+}
+
+### Output
+
+{
+  "failure_prediction": 1,
+  "failure_probability": 1.0,
+  "top_factors": ["pressure", "temperature"]
+}
 
 ---
 
-## Key Implementation Details
+## 📊 Explainability
 
-### Week 1 - Data Engineering
-- CSV ingestion, linear interpolation for missing values
-- Sorted by machine_id + timestamp to prevent data leakage
-- Correlation matrix calculated and visualized
+Uses SHAP to explain model predictions.
 
-### Week 2 - Modeling
-- Logistic Regression baseline
-- Random Forest with SMOTE
-- XGBoost with RandomizedSearchCV
-- Metric: F1-Score + Recall (NOT accuracy)
+---
 
-### Week 3 - Explainability (XAI)
-- SHAP TreeExplainer for global feature importance
-- SHAP Summary Plot saved
-- SHAP Force Plot for individual failure explanation
+## 👨‍💻 Author
 
-### Week 4 - Deployment
-- Flask REST API returning failure probability + SHAP explanation
-- API latency < 50ms
-- Model saved with joblib
+Nisha Malani
+
+---
+
+Production Machine Learning Project
