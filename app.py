@@ -1,29 +1,74 @@
-import joblib
 from flask import Flask, request, jsonify
-import numpy as np
+import joblib
+import pandas as pd
 import shap
-import time
 
 app = Flask(__name__)
-model = joblib.load("model.pkl")
-explainer = shap.TreeExplainer(model)
+
+# Load model
+model = joblib.load("models/model.pkl")
+
+# SHAP explainer
+explainer = shap.Explainer(model)
+
+# Expected columns
+EXPECTED_COLUMNS = [
+    "vibration",
+    "temperature",
+    "pressure",
+    "temp_roll_mean",
+    "vibration_roll_mean",
+    "temp_lag1",
+    "vibration_lag1"
+]
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return "FactoryGuard AI API is running 🚀"
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    start = time.time()
-    data = request.get_json()
-    features = np.array(data["features"]).reshape(1, -1)
-    failure_prob = float(model.predict_proba(features)[0][1])
-    prediction = int(failure_prob > 0.5)
-    shap_vals = explainer.shap_values(features)[0]
-    feature_names = data.get("feature_names", [f"feature_{i}" for i in range(len(shap_vals))])
-    explanation = {name: round(float(val), 4) for name, val in zip(feature_names, shap_vals)}
-    latency_ms = (time.time() - start) * 1000
-    return jsonify({"failure_probability": round(failure_prob, 4), "prediction": "FAILURE_RISK" if prediction else "NORMAL", "shap_explanation": explanation, "latency_ms": round(latency_ms, 2)})
+    try:
+        data = request.json
 
-@app.route("/health", methods=["GET"])
-def health():
-    return jsonify({"status": "ok"})
+        # Convert input to DataFrame
+        df = pd.DataFrame([data])
+
+        # Ensure correct column order
+        df = df[EXPECTED_COLUMNS]
+
+        # Prediction
+        pred = int(model.predict(df)[0])
+        prob = float(model.predict_proba(df)[0][1])
+
+        # SHAP explanation
+        shap_values = explainer(df)
+
+        values = shap_values.values
+        if len(values.shape) == 3:
+            values = values[0]
+
+        feature_importance = dict(zip(df.columns, values[0]))
+
+        sorted_features = sorted(
+            feature_importance.items(),
+            key=lambda x: abs(x[1]),
+            reverse=True
+        )
+
+        top_features = [k for k, v in sorted_features[:2]]
+
+        return jsonify({
+            "failure_prediction": pred,
+            "failure_probability": round(prob, 3),
+            "top_factors": top_features
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5050, debug=True)

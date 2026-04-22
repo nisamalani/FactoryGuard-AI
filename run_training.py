@@ -19,7 +19,7 @@ from model import train_baseline, train_xgboost, train_random_forest, evaluate_m
 def main():
     print("=" * 55)
     print("  FactoryGuard AI - Production Training Pipeline")
-    print("  Infotact Solutions | Cohort Zeta | Q4 2025")
+    print("  Infotact Solutions | Cohort Zeta | Q4 2026")
     print("=" * 55)
 
     # Step 1: Load Data
@@ -30,11 +30,15 @@ def main():
 
     # Step 2: Feature Engineering
     print("\nStep 2: Feature engineering...")
-    df = add_rolling_features(df)
-    feature_cols = get_feature_columns(df)
+
+    from feature_engineering import apply_feature_engineering
+
+    df = apply_feature_engineering(df)
+    feature_cols = get_feature_columns()
+
     print(f"  Features created: {len(feature_cols)}")
     print(f"  Feature list: {feature_cols[:5]}... (showing first 5)")
-
+    
     # Step 3: Split
     print("\nStep 3: Splitting data (80/20 train/test)...")
     X = df[feature_cols].values
