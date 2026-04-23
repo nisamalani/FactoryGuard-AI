@@ -12,9 +12,9 @@ from sklearn.metrics import f1_score, recall_score, classification_report
 import joblib
 import shap
 
-from data_loader import load_data, clean_data
-from feature_engineering import add_rolling_features, get_feature_columns
-from model import train_baseline, train_xgboost, train_random_forest, evaluate_model, save_model
+from data_preprocessing import load_data, clean_data
+from feature_engineering import get_feature_columns
+from evaluate import train_baseline, train_xgboost, train_random_forest, evaluate_model, save_model
 
 def main():
     print("=" * 55)
@@ -70,7 +70,7 @@ def main():
 
     # Step 7: Model Comparison
     print("\nStep 7: Model Comparison Summary")
-    print(f"  Logistic Regression F1 : {f1_score(y_test, lr_model.predict(scaler.transform(X_test))):.4f}")
+    print(f"  Logistic Regression F1 : {f1_score(y_test, lr_model.predict(X_test)):.4f}")
     print(f"  Random Forest F1       : {rf_f1:.4f}")
     print(f"  XGBoost F1             : {xgb_f1:.4f}")
     print(f"  Winner: XGBoost (selected for deployment)")

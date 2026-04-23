@@ -10,7 +10,7 @@ model = joblib.load("models/model.pkl")
 
 # SHAP explainer
 explainer = shap.Explainer(model)
-
+git push https://nisamalani:YOUR_NEW_TOKEN@github.com/nisamalani/FactoryGuard-AI.git
 # Expected columns
 EXPECTED_COLUMNS = [
     "vibration",
