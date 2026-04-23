@@ -1,115 +1,177 @@
 # 🚀 FactoryGuard AI
 
-<<<<<<< HEAD
-> **Infotact Solutions | Data Intelligence Unit | Cohort Zeta | Q4 2026**
-
-## Problem Statement
-A large-scale manufacturing facility operates 500 critical robotic arms.  
-Unplanned equipment failure costs **$10,000/hour** in downtime.  
-FactoryGuard AI predicts failure **24 hours in advance** from streaming IoT sensor data.
-=======
-Production-ready Predictive Maintenance System that predicts machine failure using sensor data and explains predictions using SHAP.
->>>>>>> 00b67ff (Final project update)
+> **AI-Powered Predictive Maintenance System**
+> Developed during Internship at Infotact Solutions | Cohort Zeta | Q4 2026
 
 ---
 
-## 📌 Features
+## 📌 Overview
 
-- Predict machine failure (binary classification)
-- Handle imbalanced data using SMOTE
-- Explain predictions using SHAP
-- Flask API for real-time prediction
-- Feature engineering (rolling + lag features)
+FactoryGuard AI is a production-ready machine learning system designed to predict industrial machine failures using IoT sensor data.
+It helps reduce downtime, optimize maintenance, and improve operational efficiency.
+
+---
+
+## 🎯 Problem Statement
+
+A large-scale manufacturing facility operates **500+ robotic machines**.
+Unexpected failures result in **$10,000/hour downtime losses**.
+
+👉 This system predicts failures **in advance**, enabling proactive maintenance.
+
+---
+
+## ⚙️ Features
+
+* 🔍 Predict machine failure (binary classification)
+* ⚖️ Handle imbalanced data
+* 🧠 Advanced ML models (Logistic Regression, Random Forest, XGBoost)
+* 📊 Model explainability using SHAP
+* ⚡ Real-time prediction via Flask API
+* 🏗️ Feature engineering (rolling mean + lag features)
 
 ---
 
 ## 🧠 Tech Stack
 
-- Python
-- Pandas, NumPy
-- Scikit-learn
-- XGBoost
-- Imbalanced-learn
-- SHAP
-- Flask
+* Python
+* Pandas, NumPy
+* Scikit-learn
+* XGBoost
+* SHAP
+* Flask
+
+---
+
+## 🏗️ Project Architecture
+
+```
+Sensor Data → Preprocessing → Feature Engineering → ML Models → Prediction → SHAP Explainability
+```
+
+---
+
+## 📊 Model Performance
+
+| Model               | F1 Score                 |
+| ------------------- | ------------------------ |
+| Logistic Regression | 0.82                     |
+| Random Forest       | 0.92                     |
+| XGBoost             | **0.95 🔥 (Best Model)** |
+
+---
+
+## 📸 Results & Explainability
+
+### 🔹 SHAP Feature Importance
+
+![SHAP Summary](assets/shap_summary_plot.png)
+
+### 🔹 SHAP Force Plot (Individual Prediction)
+
+![SHAP Force](assets/shap_force_plot.png)
 
 ---
 
 ## 📂 Project Structure
 
+```
 FactoryGuard_AI/
 │
 ├── data/
-│   └── sensor_data.csv
+├── models/
+│   └── model.pkl
 │
 ├── src/
 │   ├── data_preprocessing.py
 │   ├── feature_engineering.py
-│   ├── train.py
-│   ├── explain.py
+│   ├── evaluate.py
 │
-├── models/
-│   └── model.pkl
+├── assets/
+│   ├── shap_summary_plot.png
+│   ├── shap_force_plot.png
 │
 ├── app.py
+├── run_training.py
 ├── requirements.txt
-├── README.md
-└── .gitignore
+└── README.md
+```
 
 ---
 
 ## ▶️ How to Run
 
-Install dependencies:
+### 1️⃣ Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-Train model:
+### 2️⃣ Train Model
 
-python src/train.py
+```bash
+python run_training.py
+```
 
-Run API:
+### 3️⃣ Run API
 
+```bash
 python app.py
+```
 
 ---
 
-## 🌐 API
+## 🌐 API Example
 
-POST /predict
+### Request
 
-### Input
-
+```json
 {
   "temperature": 85,
   "vibration": 0.8,
-  "pressure": 30,
   "temp_roll_mean": 82,
   "vibration_roll_mean": 0.75,
   "temp_lag1": 84,
   "vibration_lag1": 0.7
 }
+```
 
-### Output
+### Response
 
+```json
 {
   "failure_prediction": 1,
-  "failure_probability": 1.0,
-  "top_factors": ["pressure", "temperature"]
+  "failure_probability": 0.95
 }
+```
 
 ---
 
-## 📊 Explainability
+## 📊 Explainability (SHAP)
 
-Uses SHAP to explain model predictions.
+SHAP (Shapley Additive Explanations) is used to interpret model predictions.
+It helps identify which features contribute most to machine failure.
+
+---
+
+## 💼 Internship Experience
+
+This project was developed during my internship at **Infotact Solutions**,
+where I worked on real-world industrial AI applications.
 
 ---
 
 ## 👨‍💻 Author
 
-Nisha Malani
+**Nisha Malani**
 
 ---
 
-Production Machine Learning Project
+## ⭐ Project Highlights
+
+* End-to-end ML pipeline
+* Real-world industrial use case
+* Explainable AI (XAI) integration
+* Production-ready structure
+
+---
